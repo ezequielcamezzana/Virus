@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 3fa61a53-aa3b-40d2-acd1-76f9e513e02a
-    AppIdChat: 439ed4e5-7d42-453e-9287-9ab983eab24a
+    AppIdRealtime: git@github.com:ezequielcamezzana/Virus.git
+    AppIdChat: 
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
@@ -35,4 +35,4 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1

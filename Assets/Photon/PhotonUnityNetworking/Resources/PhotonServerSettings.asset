@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: git@github.com:ezequielcamezzana/Virus.git
+    AppIdRealtime: ab21a9b8-a34a-4375-89fc-e040ca0a5e8a
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 
-    UseNameServer: 1
+    AppVersion: 1
+    UseNameServer: 0
     FixedRegion: 
-    Server: 
-    Port: 0
-    Protocol: 0
-    EnableLobbyStatistics: 0
+    Server: 3.124.105.55
+    Port: 8999
+    Protocol: 1
+    EnableLobbyStatistics: 1
     NetworkLogging: 1
   PunLogging: 0
   EnableSupportLogger: 0
-  RunInBackground: 1
+  RunInBackground: 0
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc

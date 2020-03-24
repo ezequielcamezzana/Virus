@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
 public class Virus : MonoBehaviour, IDamageable, IDestructible
 {
@@ -19,7 +20,23 @@ public class Virus : MonoBehaviour, IDamageable, IDestructible
     void Awake()
     {
         virusBuilder = GetComponent<VirusBuilder>();
-        virusBuilder.Generate();
+
+        //LLamo al server pido un virus random
+        StartCoroutine(APIService.Instance.GetRandomVirus((GetRandomVirusModel response) =>
+        {
+            Debug.Log(response.virus.seed);
+            virusBuilder.Build(response.virus.seed);
+        }));
+
+        //Creo las prperties
+
+        //Genero la visuai
+
+        //saco Foto
+
+        //subo foto al sever
+
+
         playerInput = GetComponent<PlayerInput>();
         movementController = GetComponent<MovementController>();
         shootingController = GetComponent<ShootingController>();

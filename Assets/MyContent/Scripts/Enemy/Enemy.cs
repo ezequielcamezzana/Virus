@@ -21,9 +21,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IDestructible
     {
         movementController = GetComponent<MovementController>();
         target = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        Debug.Log(target);
-
         lifePoints = properties.lifePoints;
     }
 

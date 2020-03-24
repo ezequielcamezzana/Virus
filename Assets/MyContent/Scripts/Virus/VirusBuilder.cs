@@ -9,29 +9,9 @@ public class VirusBuilder : MonoBehaviour
     public int seed;
     public bool generateSeed;
 
-    void Awake()
+    public void Build(int seed)
     {
-
-        if (generateSeed)
-        {
-            Random.InitState(Random.Range(0, 999999));
-        }
-        else
-        {
-            Random.InitState(seed);
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Generate();
-        }
-    }
-
-    public void Generate()
-    {
+        Random.InitState(seed);
         BuildBody();
         //BuildArms();
         BuildMouth();

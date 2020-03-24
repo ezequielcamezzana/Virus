@@ -1,0 +1,74 @@
+
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 128MB
+      max-file-size: 128MB
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+    hibernate:
+      use-new-id-generator-mappings: false
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: validate
+  application:
+    name: coronatime
+
+virus:
+  image:
+    bucket: lhet.coronagame
+  stats:
+    damage:
+      min: 1
+      max: 2
+    projectile-speed:
+      min: 15
+      max: 20
+    speed:
+      min: 6
+      max: 8
+    life-points:
+      min: 3
+      max: 4
+
+server:
+  port: 9000
+
+software:
+  security:
+    jwt:
+      expiration-in-minutes: 60
+      secret-key: 3NTNe3B+LkZ9xKGGAHUqPrji2aW+ivKPEc7F6to9Wpo=
+    salt:
+      key: salt-key
+
+
+---
+
+spring:
+  profiles: dev
+  jpa:
+    show-sql: false
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/virus
+    username: root
+    password: thisisapw
+
+---
+server:
+  port: 8999
+
+spring:
+  profiles: aws
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url:
+    username: enf
+    password: aws

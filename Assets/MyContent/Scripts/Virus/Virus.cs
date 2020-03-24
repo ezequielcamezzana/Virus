@@ -23,7 +23,6 @@ public class Virus : MonoBehaviour, IDamageable, IDestructible
         playerInput = GetComponent<PlayerInput>();
         movementController = GetComponent<MovementController>();
         shootingController = GetComponent<ShootingController>();
-        animatorController = GetComponent<AnimatorController>();
         dashTime = properties.dashTime;
         LifePoints = properties.lifePoints;
     }
@@ -32,7 +31,6 @@ public class Virus : MonoBehaviour, IDamageable, IDestructible
     {
         movementController.Rotate(playerInput.DirectionVector);
         movementController.Move(playerInput.MovementVector, properties.speed);
-        animatorController.MoveAnimation(playerInput.MovementVector != Vector2.zero);
         if (playerInput.ShootAction && Time.time >= attackTime)
         {
             shootingController.Shoot(properties.projectileSpeed, properties.damage);

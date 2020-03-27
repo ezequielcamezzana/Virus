@@ -5,7 +5,7 @@ using Utils;
 
 public enum Part
 {
-    Body, Arm, Eye, Tail, Mouth
+    Body, Arm, Eye, Tail, Mouth, Outline
 }
 
 public class PartService

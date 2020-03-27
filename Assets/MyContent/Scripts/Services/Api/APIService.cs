@@ -5,8 +5,8 @@ using System;
 
 public class APIService
 {
-    private string url = "http://3.134.105.55:8999";
-    private string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSIiwiYWN0aXZlIjp0cnVlLCJfaWQiOiI1ZGYxYjhlZmI5NzU3MjAwMWYyZGM0NTEiLCJuYW1lIjoiRXplcXVpZWwgQ2FtZXp6YW5hIiwiZW1haWwiOiJlemVxdWllbGNhbWV6emFuYUBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoiMjAxOS0xMi0xMlQwMzo1MDowNy41MDlaIiwidXBkYXRlZEF0IjoiMjAxOS0xMi0xMlQwMzo1MDowNy41MDlaIiwiX192IjowfSwiaWF0IjoxNTc2NTU0NzY3LCJleHAiOjE1NzY1NTgzNjd9.B329KykHzzPcmJhfe1BCXp_hEK5-G66rNfqXH0iVBM0";
+    private const string URL = "http://3.134.105.55:8999";
+    private const string TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJVU0VSIiwiYWN0aXZlIjp0cnVlLCJfaWQiOiI1ZGYxYjhlZmI5NzU3MjAwMWYyZGM0NTEiLCJuYW1lIjoiRXplcXVpZWwgQ2FtZXp6YW5hIiwiZW1haWwiOiJlemVxdWllbGNhbWV6emFuYUBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoiMjAxOS0xMi0xMlQwMzo1MDowNy41MDlaIiwidXBkYXRlZEF0IjoiMjAxOS0xMi0xMlQwMzo1MDowNy41MDlaIiwiX192IjowfSwiaWF0IjoxNTc2NTU0NzY3LCJleHAiOjE1NzY1NTgzNjd9.B329KykHzzPcmJhfe1BCXp_hEK5-G66rNfqXH0iVBM0";
 
     private static APIService instance = null;
     public static APIService Instance
@@ -49,8 +49,8 @@ public class APIService
 
     IEnumerator PostRequest<T>(string path, WWWForm form, Action<T> callback, Action error)
     {
-        UnityWebRequest uwr = UnityWebRequest.Post(this.url + path, form);
-        uwr.SetRequestHeader("Authorization", token);
+        UnityWebRequest uwr = UnityWebRequest.Post(URL + path, form);
+        uwr.SetRequestHeader("Authorization", TOKEN);
         yield return uwr.SendWebRequest();
 
         if (uwr.responseCode == 0 || uwr.responseCode >= 400)
@@ -67,12 +67,12 @@ public class APIService
 
     private IEnumerator PostRequest<T>(string path, string json, Action<T> callback, Action error)
     {
-        var uwr = new UnityWebRequest(this.url + path, "POST");
+        var uwr = new UnityWebRequest(URL + path, "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         uwr.SetRequestHeader("Content-Type", "application/json");
-        uwr.SetRequestHeader("Authorization", token);
+        uwr.SetRequestHeader("Authorization", TOKEN);
 
         //Send the request then wait here until it returns
         yield return uwr.SendWebRequest();
@@ -91,7 +91,7 @@ public class APIService
 
     private IEnumerator GetRequest<T>(string path, Action<T> callback, Action error)
     {
-        UnityWebRequest uwr = UnityWebRequest.Get(this.url + path);
+        UnityWebRequest uwr = UnityWebRequest.Get(URL + path);
         uwr.SetRequestHeader("Content-Type", "application/json");
         //uwr.SetRequestHeader("Authorization", token);
         //Send the request then wait here until it returns

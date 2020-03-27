@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -44,12 +45,28 @@ public class VirusBuilder : MonoBehaviour
         body = Instantiate(body, transform.position, Quaternion.identity, transform);
         // body.gameObject.layer = LayerMask.NameToLayer("Creatures");
         ApplyRandomColor(body);
+        
+        // TODO: separate the code of outlines.
+        var outlines = GetComponentsInChildren<Transform>()
+            .Where(t => t.name.ToLower().Contains("gameobject"));
+        var outline = PartService.Instance.GetPart(Part.Outline); 
+        var spriteRendererBody = body.gameObject.GetComponent<SpriteRenderer>();
+        foreach (var transformOutline in outlines)
+        {
+            var currentOutline = Instantiate(outline, transformOutline.position, transformOutline.rotation, transformOutline);
+            var spriteRenderer = currentOutline.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = spriteRendererBody.color;
+            // TODO: Load the image set in the component.
+            // var spriteRenderer = transformOutline.gameObject.AddComponent<SpriteRenderer>();
+            // spriteRenderer.color = Random.ColorHSV();
+            // spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+        }
     }
 
     private void BuildTail()
     {
+        Transform anchor = GetAnchors(body, Part.Tail).FirstOrDefault();
         Transform _tail = PartService.Instance.GetPart(Part.Tail);
-        Transform anchor = GetAnchors(body, Part.Tail)[0];
         Transform tail = Instantiate(_tail, anchor.position, anchor.rotation);
         tail.parent = anchor;
         ApplyRandomColor(tail);
@@ -57,8 +74,8 @@ public class VirusBuilder : MonoBehaviour
 
     private void BuildMouth()
     {
+        Transform anchor = GetAnchors(body, Part.Mouth).FirstOrDefault();
         Transform _mouth = PartService.Instance.GetPart(Part.Mouth);
-        Transform anchor = GetAnchors(body, Part.Mouth)[0];
         Transform mouth = Object.Instantiate(_mouth, anchor.position, anchor.rotation);
         mouth.parent = anchor;
         ApplyRandomColor(mouth);
@@ -67,7 +84,7 @@ public class VirusBuilder : MonoBehaviour
 
     private void BuildEyes()
     {
-        Transform anchor = GetAnchors(body, Part.Eye)[0];
+        Transform anchor = GetAnchors(body, Part.Eye).FirstOrDefault();
         Transform eye = PartService.Instance.GetPart(Part.Eye);
         int eyeAmount = Random.Range(1, 4);
         if (eyeAmount > 1)

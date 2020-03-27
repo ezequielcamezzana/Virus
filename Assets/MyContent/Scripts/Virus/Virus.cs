@@ -1,32 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using Photon.Pun;
 
 public class Virus : MonoBehaviour, IDamageable, IDestructible
 {
-    private PlayerInput playerInput;
-    private MovementController movementController;
-    private ShootingController shootingController;
-    private AnimatorController animatorController;
-    private VirusBuilder virusBuilder;
-
     public VirusProperties properties;
 
-    private float dashTime;
-    private float attackTime;
+    private PlayerInput _playerInput;
+    private MovementController _movementController;
+    private ShootingController _shootingController;
+    private AnimatorController _animatorController;
+    private VirusBuilder _virusBuilder;
+    private float _dashTime;
+    private float _attackTime;
+
     private float LifePoints { get; set; }
 
-
-    void Awake()
+    private void Start()
     {
-        virusBuilder = GetComponent<VirusBuilder>();
-
+        _virusBuilder = GetComponent<VirusBuilder>();
         //LLamo al server pido un virus random
-        StartCoroutine(APIService.Instance.GetRandomVirus((GetRandomVirusModel response) =>
-        {
-            Debug.Log(response.virus.seed);
-            virusBuilder.Build(response.virus.seed);
-        }));
+
+        _virusBuilder.Build(_virusBuilder.seed);
+        // StartCoroutine(APIService.Instance.GetRandomVirus((GetRandomVirusModel response) =>
+        // {
+        //     Debug.Log(response.virus.seed);
+        //     _virusBuilder.Build(response.virus.seed);
+        // }));
 
         //Creo las prperties
 
@@ -37,30 +38,30 @@ public class Virus : MonoBehaviour, IDamageable, IDestructible
         //subo foto al sever
 
 
-        playerInput = GetComponent<PlayerInput>();
-        movementController = GetComponent<MovementController>();
-        shootingController = GetComponent<ShootingController>();
-        dashTime = properties.dashTime;
+        _playerInput = GetComponent<PlayerInput>();
+        _movementController = GetComponent<MovementController>();
+        _shootingController = GetComponent<ShootingController>();
+        _dashTime = properties.dashTime;
         LifePoints = properties.lifePoints;
     }
 
-    void Update()
+    private void Update()
     {
-        movementController.Rotate(playerInput.DirectionVector);
-        movementController.Move(playerInput.MovementVector, properties.speed);
-        if (playerInput.ShootAction && Time.time >= attackTime)
+        _movementController.Rotate(_playerInput.DirectionVector);
+        _movementController.Move(_playerInput.MovementVector, properties.speed);
+        if (_playerInput.ShootAction && Time.time >= _attackTime)
         {
-            shootingController.Shoot(properties.projectileSpeed, properties.damage);
-            attackTime = Time.time + properties.timeBetweenAttack;
+            _shootingController.Shoot(properties.projectileSpeed, properties.damage);
+            _attackTime = Time.time + properties.timeBetweenAttack;
         }
-        if (playerInput.DashAction)
+        if (_playerInput.DashAction)
         {
-            Vector2 direction = playerInput.MovementVector != Vector2.zero ? playerInput.MovementVector : (Vector2)transform.up;
-            movementController.Dash(direction, properties.speed, ref dashTime);
+            var direction = _playerInput.MovementVector != Vector2.zero ? _playerInput.MovementVector : (Vector2)transform.up;
+            _movementController.Dash(direction, properties.speed, ref _dashTime);
         }
         else
         {
-            dashTime = properties.dashTime;
+            _dashTime = properties.dashTime;
         }
     }
 
